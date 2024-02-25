@@ -1,0 +1,37 @@
+[gd_scene load_steps=6 format=3 uid="uid://klg0ia2eldjd"]
+
+[ext_resource type="Script" path="res://Scripts/Player.gd" id="1_jrtuk"]
+[ext_resource type="Texture2D" uid="uid://dv23s6t76lac1" path="res://icon.svg" id="1_svwet"]
+[ext_resource type="Script" path="res://Scripts/mouse_follower2D.gd" id="3_mepnb"]
+[ext_resource type="Script" path="res://Scripts/RayVoidDetector.gd" id="4_ajfy0"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_cu3ff"]
+size = Vector2(100, 100)
+
+[node name="Player" type="CharacterBody2D"]
+script = ExtResource("1_jrtuk")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+scale = Vector2(0.8, 0.8)
+texture = ExtResource("1_svwet")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_cu3ff")
+
+[node name="MouseFollower2D" type="Node2D" parent="." node_paths=PackedStringArray("node2d")]
+script = ExtResource("3_mepnb")
+node2d = NodePath("..")
+is_lepr = true
+is_global_position = true
+lerp_speed = 1.0
+
+[node name="RayVoidDetector" type="RayCast2D" parent="." node_paths=PackedStringArray("body")]
+position = Vector2(0, 50)
+target_position = Vector2(0, 201)
+collision_mask = 2
+hit_from_inside = true
+script = ExtResource("4_ajfy0")
+body = NodePath("..")
+offset_x_from_player = 100.0
+
+[connection signal="void_near_found" from="RayVoidDetector" to="." method="_on_ray_void_detector_void_near_found"]

@@ -1,0 +1,56 @@
+[gd_scene load_steps=6 format=3 uid="uid://biwq6g35kue13"]
+
+[ext_resource type="PackedScene" uid="uid://klg0ia2eldjd" path="res://Prefabs/Player/Player.tscn" id="1_pgxsl"]
+[ext_resource type="PackedScene" uid="uid://b7tbq1if7q1n8" path="res://Prefabs/Platform/Platform.tscn" id="3_h3q4p"]
+[ext_resource type="Texture2D" uid="uid://dv23s6t76lac1" path="res://icon.svg" id="4_qqmwr"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_xmb5x"]
+size = Vector2(757, 47)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_fewxs"]
+size = Vector2(124, 124)
+
+[node name="Game" type="Node"]
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(130, 0)
+zoom = Vector2(0.5, 0.5)
+position_smoothing_enabled = true
+metadata/_edit_group_ = true
+metadata/_edit_lock_ = true
+
+[node name="CharacterBody2D" parent="." instance=ExtResource("1_pgxsl")]
+position = Vector2(130, 0)
+collision_mask = 3
+metadata/_edit_group_ = true
+
+[node name="RemoteTransform2D" type="RemoteTransform2D" parent="CharacterBody2D"]
+remote_path = NodePath("../../Camera2D")
+
+[node name="Platforms" type="Node2D" parent="."]
+
+[node name="Platform" parent="Platforms" instance=ExtResource("3_h3q4p")]
+position = Vector2(434, 605)
+metadata/_edit_group_ = true
+
+[node name="CollisionShape2D" parent="Platforms/Platform" index="0"]
+position = Vector2(-3.5, -0.5)
+shape = SubResource("RectangleShape2D_xmb5x")
+
+[node name="Sprite2D" parent="Platforms/Platform" index="1"]
+scale = Vector2(5.97152, 0.4)
+texture = ExtResource("4_qqmwr")
+
+[node name="Platform2" parent="Platforms" instance=ExtResource("3_h3q4p")]
+position = Vector2(833, 361)
+metadata/_edit_group_ = true
+
+[node name="CollisionShape2D" parent="Platforms/Platform2" index="0"]
+position = Vector2(1, -1)
+shape = SubResource("RectangleShape2D_fewxs")
+
+[node name="Sprite2D" parent="Platforms/Platform2" index="1"]
+texture = ExtResource("4_qqmwr")
+
+[editable path="Platforms/Platform"]
+[editable path="Platforms/Platform2"]
